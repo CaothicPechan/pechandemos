@@ -30,6 +30,7 @@ export default {
   methods:
   {
     register(e){
+      e.preventDefault();
       let form = e.target;
       let elements = form.elements;
       for(var i = 0; i < elements.length; i++){
