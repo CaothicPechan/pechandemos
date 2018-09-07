@@ -53,7 +53,7 @@ export default {
       let video = this.$refs.video;
       let time = video.currentTime;
       console.log(time);
-      if(time > 9 && time < 9.8 && !this.called){
+      if(time > 8 && time < 8.8 && !this.called){
 
         let body = {
           type: 'call',
