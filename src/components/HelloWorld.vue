@@ -23,7 +23,7 @@ export default {
       nombre: '',
       email: '',
       tel: '',
-      authPhones: ['5215578783626', '5215533902514', '5215569091998'],
+      authPhones: ['5215578783626', '5215533902514', '5215569091998', '5217222549405'],
       called: false,
       img: '/static/logo.png',
       videoOn: false,
@@ -36,6 +36,8 @@ export default {
       e.preventDefault();
       let form = e.target;
       let elements = form.elements;
+      this.tel = this.tel.trim();
+
       for(var i = 0; i < elements.length; i++){
         let el = elements[i];
         if(el.value == ''){
@@ -47,6 +49,10 @@ export default {
         this.videoOn = true;
         this.called = false;
         this.img = '/static/loadvideo.gif'
+      }else{
+        if(!this.authPhones.includes(this.tel)){
+          alert('El número que está intentanto ingresar no se encuentra registrado en el dominio :(');
+        }
       }
     },
     updateTime(){
