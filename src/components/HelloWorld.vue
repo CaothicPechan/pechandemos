@@ -7,21 +7,24 @@
       form(@submit="register")
         input(v-model="nombre" placeholder="Nombre")
         input(v-model="email" placeholder="Email" type="email")
+        input(v-model="tel" placeholder="Telefono")
         button(value="Registrar" type="submit") Registrar
     .video-container(v-show="videoOn" :class=" { active : videoOn} " )
       video(width="320" height="240" controls ref="video" @timeupdate="updateTime" )
-        source( src='https://s3.amazonaws.com/pechanlifecycle/video_2018-09-05_11-00-53.mp4' type="video/mp4")
+        source( src='https://s3.amazonaws.com/pechanlifecycle/carlos.mp4' type="video/mp4")
   
 
 </template>
 <script>
-
 export default {
   name: 'VideoOn',
   data () {
     return {
       nombre: '',
       email: '',
+      tel: '',
+      authPhones: ['5215578783626', '5215533902514', '5215569091998'],
+      called: false,
       img: '/static/logo.png',
       videoOn: false,
       msg: 'Welcome to Your Vue.js App'
@@ -39,25 +42,42 @@ export default {
           el.classList.add('error');
         }
       }
-      if(this.nombre && this.email){
+
+      if(this.nombre && this.email && this.tel && this.authPhones.includes(this.tel)){
         this.videoOn = true;
+        this.called = false;
         this.img = '/static/loadvideo.gif'
       }
     },
     updateTime(){
       let video = this.$refs.video;
       let time = video.currentTime;
-      if(time > 5 && time < 5.5){
+      console.log(time);
+      if(time > 9 && time < 9.8 && !this.called){
+
+        let body = {
+          type: 'call',
+          id: '18937',
+          phone: '5215569091998',
+          nombre: this.nombre,
+          email: this.email
+        }
+        this.$http.post('/makecall',body).then((res) => {
+          console.log('Response');
+          console.log(res);
+        })
+        console.log('INIT');
+        this.called = true;
         // video.pause();
-        window.speechSynthesis.getVoices();
+        // window.speechSynthesis.getVoices();
         
-        var msg = new SpeechSynthesisUtterance();
-        msg.text = `Hola ${this.nombre}. Pronto conocerás más sobre nosotros, nos comunicaremos por email`;
+        // var msg = new SpeechSynthesisUtterance();
+        // msg.text = `Hola ${this.nombre}. Pronto conocerás más sobre nosotros, nos comunicaremos por email`;
         
-        setTimeout(() => {
-          msg.voice = speechSynthesis.getVoices()[5];
-          window.speechSynthesis.speak(msg);
-        }, 1000 );  
+        // setTimeout(() => {
+        //   msg.voice = speechSynthesis.getVoices()[5];
+        //   window.speechSynthesis.speak(msg);
+        // }, 1000 );  
       }
     }
   }
