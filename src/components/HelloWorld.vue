@@ -23,7 +23,7 @@ export default {
       nombre: '',
       email: '',
       tel: '',
-      authPhones: ['5215578783626', '5215533902514', '5215569091998', '5217222549405'],
+      authPhones: ['5215578783626', '5215533902514', '5215569091998', '5217222549405', '5215542732568'],
       called: false,
       img: '/static/logo.png',
       videoOn: false,
