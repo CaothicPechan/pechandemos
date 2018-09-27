@@ -9,9 +9,11 @@
         input(v-model="email" placeholder="Email" type="email")
         input(v-model="tel" placeholder="Telefono")
         button(value="Registrar" type="submit") Registrar
-    .video-container(v-show="videoOn" :class=" { active : videoOn} " )
-      video(width="320" height="240" controls ref="video" @timeupdate="updateTime" )
-        source( src='https://s3.amazonaws.com/pechanlifecycle/carlos.mp4' type="video/mp4")
+    .video-container(v-show="videoOn" :class=" { active : videoOn } " )
+      video(width="320" height="240" controls ref="video" @timeupdate="updateTime" @ended="bVideo = !bVideo" v-show="bVideo")
+        source( src='https://s3.amazonaws.com/pechanlifecycle/carlosInit.mp4' type="video/mp4")
+      video(width="320" height="240" controls ref="videoEnd" v-show="!bVideo" )
+        source( src='https://s3.amazonaws.com/pechanlifecycle/carlosEnd.mp4' type="video/mp4")
   
 
 </template>
@@ -27,6 +29,7 @@ export default {
       called: false,
       img: '/static/logo.png',
       videoOn: false,
+      bVideo: true,
       msg: 'Welcome to Your Vue.js App'
     }
   },
@@ -57,9 +60,10 @@ export default {
     },
     updateTime(){
       let video = this.$refs.video;
+      let videoFin = this.$refs.videoEnd;
       let time = video.currentTime;
-      console.log(time);
-      if(time > 8 && time < 8.8 && !this.called){
+
+      if(time > 10 && time < 10.8 && !this.called){
 
         let body = {
           type: 'call',
@@ -71,9 +75,16 @@ export default {
         this.$http.post('/makecall',body).then((res) => {
           console.log('Response');
           console.log(res);
+          if(res.status == 200){
+            setTimeout(()=>{
+              console.log('Call Started/ Video to play');
+              console.log(videoFin);
+              videoFin.play();
+            }, 24000);
+          }
         })
-        console.log('INIT');
         this.called = true;
+        
         // video.pause();
         // window.speechSynthesis.getVoices();
         
