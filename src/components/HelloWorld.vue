@@ -67,7 +67,7 @@ export default {
       let videoFin = this.$refs.videoEnd;
       let time = video.currentTime;
 
-      if(time > 10 && time < 10.8 && !this.called){
+      if(time > 12 && time < 12.8 && !this.called){
 
         let body = {
           type: 'call',
@@ -84,7 +84,7 @@ export default {
               console.log('Call Started/ Video to play');
               console.log(videoFin);
               videoFin.play();
-            }, 24000);
+            }, 26000);
           }
         })
         this.called = true;
