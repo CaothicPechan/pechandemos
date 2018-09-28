@@ -2,19 +2,23 @@
 <template lang="pug">
   .main-demo-component-container
     .img-container
-      img(:src="img")
+      img(:src="img" :class="{ 'video-display' : videoOn }" v-show=" !videoOn")
     .register-container(v-show="!videoOn")
       form(@submit="register")
         input(v-model="nombre" placeholder="Nombre")
         input(v-model="email" placeholder="Email" type="email")
-        input(v-model="tel" placeholder="Telefono")
+        input(v-model="tel" placeholder="Telefono (10 dígitos)" maxlength="10")
         button(value="Registrar" type="submit") Registrar
     .video-container(v-show="videoOn" :class=" { active : videoOn } " )
-      video(width="320" height="240" controls ref="video" @timeupdate="updateTime" @ended="bVideo = !bVideo" v-show="bVideo")
+      video(width="520" height="340" controls ref="video" @timeupdate="updateTime" @ended="bVideo = !bVideo" v-show="bVideo")
         source( src='https://s3.amazonaws.com/pechanlifecycle/carlosInit.mp4' type="video/mp4")
-      video(width="320" height="240" controls ref="videoEnd" v-show="!bVideo" )
+      video(width="520" height="340" controls ref="videoEnd" v-show="!bVideo" )
         source( src='https://s3.amazonaws.com/pechanlifecycle/carlosEnd.mp4' type="video/mp4")
-  
+      .contact-container
+        span M&S Consulting 
+          a(href="http://m-sconsulting.com.mx" target="_blank") m-sconsulting.com.mx 
+          | | Rezongona 
+          a(href="https://www.rezongona.com/" target="_blank") rezongona.com
 
 </template>
 <script>
@@ -27,7 +31,7 @@ export default {
       tel: '',
       authPhones: ['5215578783626', '5215533902514', '5215569091998', '5217222549405', '5215542732568'],
       called: false,
-      img: '/static/logo.png',
+      img: 'https://s3.amazonaws.com/pechanlifecycle/logorm.png',
       videoOn: false,
       bVideo: true,
       msg: 'Welcome to Your Vue.js App'
@@ -39,7 +43,7 @@ export default {
       e.preventDefault();
       let form = e.target;
       let elements = form.elements;
-      this.tel = this.tel.trim();
+      this.tel = '521' + this.tel.trim();
 
       for(var i = 0; i < elements.length; i++){
         let el = elements[i];
@@ -121,6 +125,12 @@ a {
   width: 100%;
   padding-top: 60px;
 }
+.img-container img{
+  width: 50%;
+}
+.img-container img.video-display{
+  width: auto;
+}
 .register-container{
   width: 360px;
   display: inline-block;
@@ -157,15 +167,16 @@ a {
   top: 0;
 }
 .register-container button:hover{
-  background: #42b983;
+  background: #2da2c8;
   color: #FFF;
 }
 .video-container{
   padding: 20px;
 }
+
 .video-container:before {
   content: "";
-  opacity: 1;
+  opacity: .4;
   position: absolute;
   background: #000066;
   bottom: 0;
@@ -178,6 +189,13 @@ a {
 
 .video-container video{
   animation: button-focus 1s;
+}
+
+.contact-container{
+  font-weight: 500;
+  font-size: 1.2rem;
+  color: white;
+  padding: 15px;
 }
 
 @keyframes button-focus {
@@ -193,7 +211,7 @@ a {
     opacity: 0;
   }
   100%{
-    opacity: 1;
+    opacity: .4;
   }
   
 }

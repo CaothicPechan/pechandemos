@@ -17,6 +17,8 @@ html,body{
   width: 100%;
   height: 100%; 
   background: #daf1e7;
+  background:#5d2c63 url('https://s3.amazonaws.com/pechanlifecycle/bgTapiz.png') no-repeat center;
+  background-size: 100% 100%;
 }
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
