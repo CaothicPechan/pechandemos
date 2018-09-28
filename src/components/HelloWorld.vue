@@ -10,9 +10,9 @@
         input(v-model="tel" placeholder="Telefono (10 dígitos)" maxlength="10")
         button(value="Registrar" type="submit") Registrar
     .video-container(v-show="videoOn" :class=" { active : videoOn } " )
-      video(width="520" height="340" controls ref="video" @timeupdate="updateTime" @ended="bVideo = !bVideo" v-show="bVideo")
+      video(controls ref="video" @timeupdate="updateTime" @ended="bVideo = !bVideo" v-show="bVideo")
         source( src='https://s3.amazonaws.com/pechanlifecycle/carlosInit.mp4' type="video/mp4")
-      video(width="520" height="340" controls ref="videoEnd" v-show="!bVideo" )
+      video(controls ref="videoEnd" v-show="!bVideo" )
         source( src='https://s3.amazonaws.com/pechanlifecycle/carlosEnd.mp4' type="video/mp4")
       .contact-container
         span M&S Consulting 
@@ -189,6 +189,8 @@ a {
 
 .video-container video{
   animation: button-focus 1s;
+  width: 520px;
+  height: 340px;
 }
 
 .contact-container{
@@ -196,6 +198,13 @@ a {
   font-size: 1.2rem;
   color: white;
   padding: 15px;
+}
+
+@media only screen and (min-width: 320px) and (max-width: 550px) {
+  .video-container video{
+    width: 320px;
+    height: 240px;
+  }
 }
 
 @keyframes button-focus {
